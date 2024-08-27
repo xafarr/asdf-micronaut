@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+set -eu
+[ "${BASH_VERSINFO[0]}" -ge 3 ] && set -o pipefail
+
+git ls-remote --tags https://github.com/micronaut-projects/micronaut-starter "v*" |
+    awk -F/v '$2 !~ /\^\{\}/ {print $2}' |
+    uniq |
+    sort -t. -k 1,1 -k 2,2n -k 3,3n -k 4,4n -k 5,5n |
+    tr '\n' ' '
